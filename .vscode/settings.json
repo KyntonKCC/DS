@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "time.h": "c"
+        "time.h": "c",
+        "chp1_00_selectionsort.h": "c"
     }
 }

@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include "chp1_00_selectionsort.h"
 #define MAX_SIZE 101
-#define SWAP(x, y, t) ((t) = (x), (x) = (y), (y) = (t))
+// #define SWAP(x, y, t) ((t) = (x), (x) = (y), (y) = (t))
 void sort(int[], int);
 
 int main(void){
@@ -29,15 +30,15 @@ int main(void){
     return 0;
 }
 
-void sort(int list[], int n){
-    int min, tmp;
-    for(int i = 0; i < n - 1; i++){
-        min = i;
-        for(int j = i + 1; j < n; j++){
-            if(list[j] < list[min]){
-                min = j;
-            }
-        }
-        SWAP(list[i], list[min], tmp);
-    }
-}
+// void sort(int list[], int n){
+//     int min, tmp;
+//     for(int i = 0; i < n - 1; i++){
+//         min = i;
+//         for(int j = i + 1; j < n; j++){
+//             if(list[j] < list[min]){
+//                 min = j;
+//             }
+//         }
+//         SWAP(list[i], list[min], tmp);
+//     }
+// }
