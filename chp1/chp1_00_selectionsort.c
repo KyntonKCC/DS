@@ -5,17 +5,18 @@
 #include "chp1_00_selectionsort.h"
 #define MAX_SIZE 101
 // #define SWAP(x, y, t) ((t) = (x), (x) = (y), (y) = (t))
-void sort(int[], int);
+// void sort(int[], int);
 
 int main(void){
     int n;
-    int list[MAX_SIZE];
+    // int list[MAX_SIZE];
     printf("Enter the number of numbers to generate: ");
     scanf("%d", &n);
     if(n < 1 || n > MAX_SIZE){
         fprintf(stderr, "Improper value of n\n");
-        exit(0);
+        exit(EXIT_FAILURE);
     }
+    int * list = malloc(n * sizeof(int));
     srand(time(NULL));
     for(int i = 0; i < n; i++){ //randomly generate numbers
         list[i] = rand() % 1000;
