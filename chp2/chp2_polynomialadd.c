@@ -6,27 +6,21 @@ typedef struct{
     float coef;
     int expon;
 } polynomial;
-polynomial terms[MAX_TERM];
+polynomial terms[MAX_TERM] = {
+    [0] = {.coef = 2,  .expon = 1000},
+    [1] = {.coef = 1,  .expon = 0},
+    [2] = {.coef = 1,  .expon = 4},
+    [3] = {.coef = 10, .expon = 3},
+    [4] = {.coef = 3,  .expon = 2},
+    [5] = {.coef = 1,  .expon = 0},
+};
 void padd(int, int, int, int, int *, int *);
 void attach(float, int);
 int avail = 0;
 int startD, finishD;
 
 int main(void){
-    terms[0].coef = 2;
-    terms[1].coef = 1;
-    terms[2].coef = 1;
-    terms[3].coef = 10;
-    terms[4].coef = 3;
-    terms[5].coef = 1;
-    terms[0].expon = 1000;
-    terms[1].expon = 0;
-    terms[2].expon = 4;
-    terms[3].expon = 3;
-    terms[4].expon = 2;
-    terms[5].expon = 0;
     avail = 6;
-    
     padd(0, 1, 2, 5, &startD, &finishD);
     for(int i = startD; i <= finishD; i++)
         printf("%d\t%f\n", terms[i].expon, terms[i].coef);
