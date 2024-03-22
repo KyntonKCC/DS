@@ -1,10 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define MAX_STACK_SIZE 8
+#define MALLOC(p, s)\
+    if(!((p) = malloc(s))){\
+        fprintf(stderr, "Insufficient memory");\
+        exit(EXIT_FAILURE);\
+    }
+#define REALLOC(p, s)\
+    if(!((p) = realloc(p, s))){\
+        fprintf(stderr, "Insufficient memory");\
+        exit(EXIT_FAILURE);\
+    }
 typedef struct{
     int key;
 }element;
-element stack[MAX_STACK_SIZE];
+element * stack;
+int capacity = 1;
 int top = -1;
 void push(element);
 element pop();
@@ -12,31 +22,31 @@ void stackFull();
 element stackEmpty();
 
 int main(void){
-    element item[MAX_STACK_SIZE + 1];
-    for(int i = 0; i < MAX_STACK_SIZE + 1; i++)
+    MALLOC(stack, sizeof(* stack));
+    element item[8];
+    for(int i = 0; i < 8; i++)
         item[i].key = i+1;
-    // for(int i = 0; i < MAX_STACK_SIZE; i++)
+    // for(int i = 0; i < capacity; i++)
     //     printf("%d ", stack[i].key);
     // printf("\n");
-    for(int i = 0; i < MAX_STACK_SIZE + 1; i++)
+    for(int i = 0; i < 8; i++)
         push(item[i]);
-    // for(int i = 0; i < MAX_STACK_SIZE; i++)
+    // for(int i = 0; i < capacity; i++)
     //     printf("%d ", stack[i].key);
     // printf("\n");
-    for(int i = 0; i < MAX_STACK_SIZE + 1; i++){
+    for(int i = 0; i < 9; i++){
         element e = pop();
     }
-    // for(int i = 0; i < MAX_STACK_SIZE; i++)
+    // for(int i = 0; i < capacity; i++)
     //     printf("%d ", stack[i].key);
     // printf("\n");
     return 0;
 }
 
 void push(element item){
-    if(top >= MAX_STACK_SIZE - 1)
+    if(top >= capacity - 1)
         stackFull();
-    else
-        stack[++top] = item;
+    stack[++top] = item;
 }
 
 element pop(){
@@ -49,8 +59,9 @@ element pop(){
 }
 
 void stackFull(){
-    fprintf(stderr, "Stack is full, cannot add element\n");
-    // exit(EXIT_FAILURE);
+    printf("Stack is full, cannot add element, capacity = %d\n", capacity);
+    REALLOC(stack, 2 * capacity * sizeof(* stack));
+    capacity *= 2;
 }
 
 element stackEmpty(){
