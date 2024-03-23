@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "time.h": "c",
-        "chp1_00_selectionsort.h": "c"
+        "chp1_00_selectionsort.h": "c",
+        "stdlib.h": "c",
+        "stdio.h": "c"
     }
 }

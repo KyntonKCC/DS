@@ -20,26 +20,22 @@ void push(element);
 element pop();
 void stackFull();
 element stackEmpty();
+void printStack();
 
 int main(void){
-    MALLOC(stack, sizeof(* stack));
-    element item[8];
-    for(int i = 0; i < 8; i++)
+    MALLOC(stack, capacity * sizeof(element));
+    element item[16];
+    for(int i = 0; i < 16; i++)
         item[i].key = i+1;
-    // for(int i = 0; i < capacity; i++)
-    //     printf("%d ", stack[i].key);
-    // printf("\n");
-    for(int i = 0; i < 8; i++)
+    // printStack();
+    for(int i = 0; i < 8; i++){
         push(item[i]);
-    // for(int i = 0; i < capacity; i++)
-    //     printf("%d ", stack[i].key);
-    // printf("\n");
+        // printStack();
+    }
     for(int i = 0; i < 9; i++){
         element e = pop();
+        // printStack();
     }
-    // for(int i = 0; i < capacity; i++)
-    //     printf("%d ", stack[i].key);
-    // printf("\n");
     return 0;
 }
 
@@ -59,12 +55,18 @@ element pop(){
 }
 
 void stackFull(){
-    printf("Stack is full, cannot add element, capacity = %d\n", capacity);
-    REALLOC(stack, 2 * capacity * sizeof(* stack));
+    printf("Stack is full, cannot add element, update capacity = %d -> %d\n", capacity, capacity * 2);
+    REALLOC(stack, 2 * capacity * sizeof(element));
     capacity *= 2;
 }
 
 element stackEmpty(){
     fprintf(stderr, "Stack is empty, cannot pop element\n");
     // exit(EXIT_FAILURE);
+}
+
+void printStack(){
+    for(int i = 0; i < capacity; i++)
+        printf("%2d ", stack[i].key);
+    printf("\n");
 }
