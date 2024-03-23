@@ -11,14 +11,15 @@ void push(int);
 int pop();
 void stackFull();
 int stackEmpty();
-int top = -1;
+int top = -1, length = 0;
 
 int main(void){
-    //234*+     //14
-    //12+7*     //21
-    //21+62*3/+ //7
-    //23*6/4+1- //4
+    //+2*34     //14
+    //*+127     //21
+    //++21/*623 //7
+    //-+/*23641 //4
     scanf("%s", expression);
+    for(int i = 0; expression[i] != '\0'; i++, length++);
     printf("%d\n", eval());
     return 0;
 }
@@ -26,14 +27,14 @@ int main(void){
 int eval(){
     char symbol;
     int op1, op2;
-    int n = 0;
+    int n = length - 1;
     precedence token = getToken(&symbol, &n);
     while(token != eos){
         if(token == operand){
             push(symbol - '0');
         }else{
-            op2 = pop();
             op1 = pop();
+            op2 = pop();
             switch(token){
                 case plus : push(op1 + op2); break;
                 case minus : push(op1 - op2); break;
@@ -48,7 +49,7 @@ int eval(){
 }
 
 precedence getToken(char * symbol, char * n){
-    * symbol = expression[(* n)++];
+    * symbol = expression[(* n)--];
     switch(* symbol){
         case '(': return lparen;
         case ')': return rparen;
