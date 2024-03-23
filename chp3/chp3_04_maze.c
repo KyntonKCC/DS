@@ -53,11 +53,11 @@ int main(void){
             else
                 mark[i][j] = maze[i - 1][j - 1];
     }
-    for(int i = 0; i < ROW + 2; i++){
-        for(int j = 0; j < COL + 2; j++)
-            printf("%d ", mark[i][j]);
-        printf("\n");
-    }
+    // for(int i = 0; i < ROW + 2; i++){
+    //     for(int j = 0; j < COL + 2; j++)
+    //         printf("%d ", mark[i][j]);
+    //     printf("\n");
+    // }
     path();
     return 0;
 }
@@ -75,6 +75,7 @@ void path(){
         row = position.row;
         col = position.col;
         dir = position.dir;
+        // printf("%2d %2d %2d\n", row, col, dir);
         while(dir < 8 && !found){
             nextRow = row + move[dir].vert;
             nextCol = col + move[dir].horiz;
@@ -85,6 +86,7 @@ void path(){
                 position.row = row;
                 position.col = col;
                 position.dir = ++dir;
+                // printf("%2d %2d %2d\n", position.row, position.col, position.dir - 1);
                 push(position);
                 row = nextRow;
                 col = nextCol;
