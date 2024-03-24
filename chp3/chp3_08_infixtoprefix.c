@@ -6,43 +6,44 @@ typedef enum{
 char expression[MAX_STACK_SIZE];
 precedence stack[MAX_STACK_SIZE];
 char remember[MAX_STACK_SIZE];
-int isp[] = {0, 19, 12, 12, 13, 13, 13, 0};
-int icp[] = {20, 19, 12, 12, 13, 13, 13, 0};
-void postfix();
+int isp[] = {19, 30, 13, 13, 12, 12, 12, 30};
+int icp[] = {19, 0, 13, 13, 12, 12, 12, 30};
+void prefix();
 precedence getToken(char *, int *);
 void rememberToken(precedence);
 void push(precedence);
 precedence pop();
 void stackFull();
 precedence stackEmpty();
-int top = 0, count = 0;
+int top = 0, length = 0, count = 0;
 
-//Infix             //Postfix
-//A+B*C             //ABC*+
-//A*(B+C)*D         //ABC+*D*
-//(A+B)*C-D/(E+F*G) //AB+C*DEFG*+/-
-//(A+B)/C*D         //AB+C/D*
-//A-B+C*D*E/F-G     //AB-CD*E*F/+G-
+//Infix             //Prefix
+//A+B*C             //+A*BC
+//A*(B+C)*D         //**A+BCD
+//(A+B)*C-D/(E+F*G) //-*+ABC/D+E*FG
+//D*E/F+A-C         //-+/*DEFAC
+//A+B+C*D/E         //++AB/*CDE
 int main(void){
     scanf("%s", expression);
-    postfix();
+    for(int i = 0; expression[i] != '\0'; i++, length++);
+    prefix();
     return 0;
 }
 
-void postfix(){
+void prefix(){
     char symbol;
-    int n = 0;
+    int n = length - 1;
     stack[0] = eos;
     precedence token = getToken(&symbol, &n);
     while(token != eos){
         if(token == operand){
             remember[count++] = symbol;
-        }else if(token == rparen){
-            while(stack[top] != lparen)
+        }else if(token == lparen){
+            while(stack[top] != rparen)
                 rememberToken(pop());
             pop();
         }else{
-            while(isp[stack[top]] >= icp[token])
+            while(isp[stack[top]] < icp[token])
                 rememberToken(pop());
             push(token);
         }
@@ -50,13 +51,13 @@ void postfix(){
     }
     while(top != 0)
         rememberToken(pop());
-    for(int i = 0; i <= count; i++)
+    for(int i = count; i >= 0; i--)
         printf("%c", remember[i]);
     printf("\n");
 }
 
 precedence getToken(char * symbol, int * n){
-    * symbol = expression[(* n)++];
+    * symbol = expression[(* n)--];
     switch(* symbol){
         case '(': return lparen;
         case ')': return rparen;
