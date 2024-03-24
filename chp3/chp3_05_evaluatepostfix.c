@@ -6,18 +6,18 @@ typedef enum{
 char expression[MAX_STACK_SIZE];
 int stack[MAX_STACK_SIZE];
 int eval();
-precedence getToken();
+precedence getToken(char *, int *);
 void push(int);
 int pop();
 void stackFull();
 int stackEmpty();
 int top = -1;
 
+//234*+         //14
+//12+7*         //21
+//21+62*3/+     //7
+//23*6/4+1-     //4
 int main(void){
-    //234*+     //14
-    //12+7*     //21
-    //21+62*3/+ //7
-    //23*6/4+1- //4
     scanf("%s", expression);
     printf("%d\n", eval());
     return 0;
@@ -47,7 +47,7 @@ int eval(){
     return pop();
 }
 
-precedence getToken(char * symbol, char * n){
+precedence getToken(char * symbol, int * n){
     * symbol = expression[(* n)++];
     switch(* symbol){
         case '(': return lparen;

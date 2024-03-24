@@ -4,52 +4,56 @@ typedef enum{
     lparen, rparen, plus, minus, times, divide, mod, eos, operand
 }precedence;
 char expression[MAX_STACK_SIZE];
-int stack[MAX_STACK_SIZE];
-int eval();
+precedence stack[MAX_STACK_SIZE];
+int isp[] = {0, 19, 12, 12, 13, 13, 13, 0};
+int icp[] = {20, 19, 12, 12, 13, 13, 13, 0};
+void postfix();
 precedence getToken(char *, int *);
-void push(int);
-int pop();
+void printToken(precedence);
+void push(precedence);
+precedence pop();
 void stackFull();
-int stackEmpty();
-int top = -1, length = 0;
+precedence stackEmpty();
+int top = 0;
 
-//+2*34         //14
-//*+127         //21
-//++21/*623     //7
-//-+/*23641     //4
+//Infix             //Postfix
+//A+B*C             //ABC*+
+//A*(B+C)*D         //ABC+*D*
+//(A+B)*C-D/(E+F*G) //AB+C*DEFG*+/-
+//(A+B)/C*D         //AB+C/D*
+//A-B+C*D*E/F-G     //AB-CD*E*F/+G-
 int main(void){
     scanf("%s", expression);
-    for(int i = 0; expression[i] != '\0'; i++, length++);
-    printf("%d\n", eval());
+    postfix();
     return 0;
 }
 
-int eval(){
+void postfix(){
     char symbol;
-    int op1, op2;
-    int n = length - 1;
+    int n = 0;
+    stack[0] = eos;
     precedence token = getToken(&symbol, &n);
     while(token != eos){
         if(token == operand){
-            push(symbol - '0');
+            printf("%c", symbol);
+        }else if(token == rparen){
+            while(stack[top] != lparen)
+                printToken(pop());
+            pop();
         }else{
-            op1 = pop();
-            op2 = pop();
-            switch(token){
-                case plus : push(op1 + op2); break;
-                case minus : push(op1 - op2); break;
-                case times : push(op1 * op2); break;
-                case divide : push(op1 / op2); break;
-                case mod : push(op1 % op2); break;
-            }
+            while(isp[stack[top]] >= icp[token])
+                printToken(pop());
+            push(token);
         }
         token = getToken(&symbol, &n);
     }
-    return pop();
+    for(int i = top; i > 0; i--)
+        printToken(pop());
+    printf("\n");
 }
 
 precedence getToken(char * symbol, int * n){
-    * symbol = expression[(* n)--];
+    * symbol = expression[(* n)++];
     switch(* symbol){
         case '(': return lparen;
         case ')': return rparen;
@@ -63,14 +67,24 @@ precedence getToken(char * symbol, int * n){
     }
 }
 
-void push(int item){
+void printToken(precedence item){
+    switch(item){
+        case plus: printf("+"); break;
+        case minus: printf("-"); break;
+        case divide: printf("/"); break;
+        case times: printf("*"); break;
+        case mod: printf("%%"); break;
+    }
+}
+
+void push(precedence item){
     if(top >= MAX_STACK_SIZE - 1)
         stackFull();
     else
         stack[++top] = item;
 }
 
-int pop(){
+precedence pop(){
     if(top == -1)
         return stackEmpty();
     else
@@ -82,7 +96,7 @@ void stackFull(){
     // exit(EXIT_FAILURE);
 }
 
-int stackEmpty(){
+precedence stackEmpty(){
     fprintf(stderr, "Stack is empty, cannot pop element\n");
     // exit(EXIT_FAILURE);
 }
