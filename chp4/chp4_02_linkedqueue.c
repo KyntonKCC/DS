@@ -14,40 +14,39 @@ struct queue{
     element data;
     queuePointer link;
 };
-queuePointer top[MAX_QUEUE];
-void printQueue();
+queuePointer start, end;
+void printQueue(queuePointer);
 void addq(element);
 element deleteq();
-int front = -1, rear = -1;
 
 int main(void){
+    MALLOC(end, sizeof(queuePointer));
+    start = end;
     element number[9] = {11, 22, 33, 44, 55, 66, 77, 88, 99};
     element e;
-    addq(number[0]);
+    {addq(number[0]);
     addq(number[1]);
     addq(number[2]);
-    printQueue();
     e = deleteq();
     e = deleteq();
-    printQueue();
+    e = deleteq();
+    // e = deleteq();
     addq(number[3]);
     addq(number[4]);
     addq(number[5]);
     e = deleteq();
     e = deleteq();
-    printQueue();
     addq(number[6]);
     addq(number[7]);
     e = deleteq();
-    addq(number[8]);
-    printQueue();
+    addq(number[8]);};
     return 0;
 }
 
-void printQueue(){
+void printQueue(queuePointer start){
     printf("The queue contents : ");
-    for(int i = front + 1; i <= rear; i++)
-        printf("%4d", top[i]->data.key);
+    for(; start; start = start->link)
+        printf("%4d", start->data.key);
     printf("\n");
 }
 
@@ -55,18 +54,27 @@ void addq(element item){
     queuePointer temp;
     MALLOC(temp, sizeof(queuePointer));
     temp->data = item;
-    temp->link = top[++rear];
-    top[rear] = temp;
+    temp->link = NULL;
+    end->link = temp;
+    end = end->link;
+    printQueue(start->link);
 }
 
 element deleteq(){
-    queuePointer temp = top[++front];
+    queuePointer temp = start->link;
     if(!temp){
-        fprintf(stderr, "Stack is empty!!!\n");
+        fprintf(stderr, "Queue is empty!!!\n");
         exit(EXIT_FAILURE);
     }
     element item = temp->data;
-    top[front] = temp->link;
+    if(temp->link != NULL){
+        start->link = temp->link;
+    }else{
+        MALLOC(end, sizeof(queuePointer));
+        start = end;
+    }
     free(temp);
+    printf("delete : %d\n", item.key);
+    printQueue(start->link);
     return item;
 }

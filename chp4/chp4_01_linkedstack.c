@@ -14,40 +14,39 @@ struct stack{
     element data;
     stackPointer link;
 };
-stackPointer top[MAX_STACK];
-void printStack();
+stackPointer start, end;
+void printStack(stackPointer);
 void push(element);
 element pop();
-int high = -1;
 
 int main(void){
+    MALLOC(end, sizeof(stackPointer));
+    start = end;
     element number[9] = {11, 22, 33, 44, 55, 66, 77, 88, 99};
     element e;
-    push(number[0]);
+    {push(number[0]);
     push(number[1]);
     push(number[2]);
-    printStack();
     e = pop();
     e = pop();
-    printStack();
+    e = pop();
+    // e = pop();
     push(number[3]);
     push(number[4]);
     push(number[5]);
     e = pop();
     e = pop();
-    printStack();
     push(number[6]);
     push(number[7]);
     e = pop();
-    push(number[8]);
-    printStack();
+    push(number[8]);};
     return 0;
 }
 
-void printStack(){
+void printStack(stackPointer start){
     printf("The stack contents : ");
-    for(int i = 0; i <= high; i++)
-        printf("%4d", top[i]->data.key);
+    for(; start; start = start->link)
+        printf("%4d", start->data.key);
     printf("\n");
 }
 
@@ -55,18 +54,25 @@ void push(element item){
     stackPointer temp;
     MALLOC(temp, sizeof(stackPointer));
     temp->data = item;
-    temp->link = top[++high];
-    top[high] = temp;
+    temp->link = NULL;
+    end->link = temp;
+    end = end->link;
+    printStack(start->link);
 }
 
 element pop(){
-    stackPointer temp = top[high];
-    if(!temp){
+    stackPointer temp = end;
+    stackPointer pass = start;
+    if(!pass->link){
         fprintf(stderr, "Stack is empty!!!\n");
         exit(EXIT_FAILURE);
     }
+    for(; pass->link != temp; pass = pass->link);
     element item = temp->data;
-    top[high--] = temp->link;
+    pass->link = NULL;
+    end = pass;
     free(temp);
+    printf("pop out : %d\n", item.key);
+    printStack(start->link);
     return item;
 }
