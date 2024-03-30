@@ -14,19 +14,7 @@ struct node{
     int data;
     nodePointer link;
 };
-/*
-12
-0 4
-3 1
-6 10
-8 9
-7 4
-6 8
-3 5
-2 11
-11 0
--1 -1
-*/
+
 int main(void){
     int out[MAX_SIZE];
     nodePointer seq[MAX_SIZE];
@@ -53,7 +41,7 @@ int main(void){
         seq[j] = x;
     }while(i >= 0);
 
-    for(int i = 0; i < n; i++){     //????
+    for(int i = 0; i < n; i++){     //?????
         if(out[i]){
             printf("\nNew class : %5d", i);
             out[i] = FALSE;
