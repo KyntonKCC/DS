@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #define TRUE 1
 #define FALSE 0
-#define MAX_STACK_SIZE 50
+#define MAX_SIZE 50
 #define MALLOC(p, s) \
     if (!((p) = malloc(s))) { \
         fprintf(stderr, "Insufficient memory"); \
@@ -24,7 +24,7 @@ Node createNode(int);
 void addEdge(Graph, int, int);
 void printGraph(Graph);
 void BFS(Graph, int);
-int queue[MAX_STACK_SIZE];
+int queue[MAX_SIZE];
 int front = -1, rear = -1;
 void addq(int);
 int deleteq();
@@ -124,7 +124,7 @@ void BFS(Graph graph, int startVertex){
 }
 
 void addq(int item){
-    if(rear == MAX_STACK_SIZE - 1)
+    if(rear == MAX_SIZE - 1)
         queueFull();
     else
         queue[++rear] = item;
