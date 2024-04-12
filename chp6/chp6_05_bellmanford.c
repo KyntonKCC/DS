@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #define TRUE 1
 #define FALSE 0
-#define SWAP(x, y, t) ((t) = (x), (x) = (y), (y) = (t))
+#define INFINITE 99
 #define MALLOC(p, s) \
     if (!((p) = malloc(s))) { \
         fprintf(stderr, "Insufficient memory"); \
@@ -47,6 +47,7 @@ int main(void) {
     addEdge(graph, 1, 2, 6);
     addEdge(graph, 4, 5, 6);
     addEdge(graph, 5, 1, 7);
+    BellmanFord(graph, 0);
     // Graph graph = createAGraph(6, 11);
     // addEdge(graph, 0, 1, 50);
     // addEdge(graph, 0, 2, 45);
@@ -59,7 +60,20 @@ int main(void) {
     // addEdge(graph, 4, 1, 20);
     // addEdge(graph, 4, 2, 35);
     // addEdge(graph, 5, 4, 3);
-    BellmanFord(graph, 0);
+    // BellmanFord(graph, 0);
+    // Graph graph = createAGraph(8, 11);
+    // addEdge(graph, 4, 5, 250);
+    // addEdge(graph, 1, 0, 300);
+    // addEdge(graph, 2, 1, 800);
+    // addEdge(graph, 5, 6, 900);
+    // addEdge(graph, 2, 0, 1000);
+    // addEdge(graph, 6, 7, 1000);
+    // addEdge(graph, 5, 3, 1000);
+    // addEdge(graph, 3, 2, 1200);
+    // addEdge(graph, 5, 7, 1400);
+    // addEdge(graph, 4, 3, 1500);
+    // addEdge(graph, 7, 0, 1700);
+    // BellmanFord(graph, 4);
     return 0;
 }
 
@@ -86,9 +100,9 @@ void BellmanFord(Graph graph, int v){
     MALLOC(subset, V * sizeof(* subset));
     for(int i = 0; i < V; i++){
         subset[i].parent = -1;
-        subset[i].rank = 99;
+        subset[i].rank = INFINITE;
     }
-    subset[0].rank = 0;
+    subset[v].rank = 0;
     // printGraph(graph);
     qsort(graph->edge, graph->numEdges, sizeof(graph->edge[0]), cmp1);
     qsort(graph->edge, graph->numEdges, sizeof(graph->edge[0]), cmp2);
