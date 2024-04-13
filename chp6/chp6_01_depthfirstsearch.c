@@ -32,6 +32,13 @@ void DFS(Graph, int);
     3   4   5   6
      \   \ /   /     
       \___7___/
+
+      1---4---5
+     /    | /  \
+    0-----2     8
+     \    | \  /
+      3---7---6
+
 */
 
 int main(void) {
@@ -46,6 +53,20 @@ int main(void) {
     addEdge(graph, 1, 3);
     addEdge(graph, 0, 2);
     addEdge(graph, 0, 1);
+    // Graph graph = createAGraph(9);
+    // addEdge(graph, 6, 8);
+    // addEdge(graph, 5, 8);
+    // addEdge(graph, 6, 7);
+    // addEdge(graph, 3, 7);
+    // addEdge(graph, 2, 7);
+    // addEdge(graph, 2, 6);
+    // addEdge(graph, 4, 5);
+    // addEdge(graph, 2, 5);
+    // addEdge(graph, 2, 4);
+    // addEdge(graph, 1, 4);
+    // addEdge(graph, 0, 3);
+    // addEdge(graph, 0, 2);
+    // addEdge(graph, 0, 1);
     printGraph(graph);
     DFS(graph, 0);
     return 0;

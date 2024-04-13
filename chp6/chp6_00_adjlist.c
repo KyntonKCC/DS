@@ -33,17 +33,11 @@ void printGraph(Graph);
 int main(void) {
     Graph graph = createAGraph(4);
     addEdge(graph, 0, 2);
-    printGraph(graph);
     addEdge(graph, 0, 1);
-    printGraph(graph);
     addEdge(graph, 2, 3);
-    printGraph(graph);
     addEdge(graph, 1, 3);
-    printGraph(graph);
     addEdge(graph, 1, 2);
-    printGraph(graph);
     addEdge(graph, 0, 3);
-    printGraph(graph);
     return 0;
 }
 
@@ -51,7 +45,7 @@ Graph createAGraph(int vertices) {
     Graph graph;
     MALLOC(graph, sizeof(* graph));
     graph->numVertices = vertices;
-    MALLOC(graph->adjLists, vertices * sizeof(Node));
+    MALLOC(graph->adjLists, vertices * sizeof(* graph->adjLists));
     for (int i = 0; i < vertices; i++) 
         graph->adjLists[i] = NULL;
     return graph;
@@ -73,6 +67,7 @@ void addEdge(Graph graph, int s, int d) {
     newNode = createNode(s);
     newNode->next = graph->adjLists[d];
     graph->adjLists[d] = newNode;
+    printGraph(graph);
 }
 
 void printGraph(Graph graph) {
@@ -83,7 +78,7 @@ void printGraph(Graph graph) {
             printf("%d -> ", temp->vertex);
             temp = temp->next;
         }
-        printf("\n");
+        printf("NULL\n");
     }
     printf("-------------------------\n");
 }
