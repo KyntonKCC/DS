@@ -28,11 +28,10 @@ typedef struct subset_s {
 Graph createAGraph(int, int);
 void addEdge(Graph, int, int, int);
 int cmp(const void *,const void *);
-int find(const Subset, int);
+int find(Subset, int);
 void Kruskal(Graph);
 void printGraph(Graph);
 void printSubset(Subset, int);
-int count = 0;
 
 /*
     A--28--B--16--C         A      B--16--C
@@ -120,10 +119,25 @@ Graph createAGraph(int v, int e) {
 }
 
 void addEdge(Graph graph, int s, int d, int w) {
+    static int count = 0;
     graph->edge[count].src = s;
     graph->edge[count].dest = d;
     graph->edge[count].weight = w;
     count++;
+}
+
+int cmp(const void * a, const void * b){
+    return ((Edge)a)->weight - ((Edge)b)->weight;
+}
+
+int find(Subset subsets, int i){
+    if((subsets+i)->parent == -1){
+        // printf("Find\n");
+        return i;
+    }else{
+        // printf("Cul ");
+        (subsets+i)->parent = find(subsets, (subsets+i)->parent);
+    }
 }
 
 void Kruskal(Graph graph){
@@ -140,12 +154,12 @@ void Kruskal(Graph graph){
     qsort(graph->edge, graph->numEdges, sizeof(graph->edge[0]), cmp);
     // printGraph(graph);
     // printSubset(subset, V);
-    int j = 0, k = 0, temp;
+    int j = 0, k = 0, temp = 0, minCost = 0;
     while(j < V - 1){
-        // printf("(j,k) = (%d %d)\n", j, k);
-        // printf("turn --> %d %d\n", graph->edge[k].src, graph->edge[k].dest);
         int x = find(subset, graph->edge[k].src);
         int y = find(subset, graph->edge[k].dest);
+        // printf("(j,k) = (%d %d)\n", j, k);
+        // printf("turn --> %d %d\n", graph->edge[k].src, graph->edge[k].dest);
         // printf("(x,y) = (%d %d)\n", x, y);
         if(x != y){
             if(x > y) SWAP(x, y, temp);
@@ -157,35 +171,18 @@ void Kruskal(Graph graph){
                 subset[x].parent = y;
                 subset[y].rank += 1;
             }
-            // printf("Road => %d %d %d\n", graph->edge[k].src, graph->edge[k].dest, graph->edge[k].weight);
             result[j].src = graph->edge[k].src;
             result[j].dest = graph->edge[k].dest;
             result[j].weight = graph->edge[k].weight;
+            minCost += result[j].weight;
             j++;
         }
         k++;
         // printSubset(subset, V);
     }
-    int ans = 0;
-    for(int i = 0; i < j; i++){
-        printf("%d %d %d\n", result[i].src, result[i].dest, result[i].weight);
-        ans += result[i].weight;
-    }
-    printf("Minimum Cost Spanning Tree : %d\n", ans);
-}
-
-int cmp(const void * a, const void * b){
-    return ((Edge)a)->weight - ((Edge)b)->weight;
-}
-
-int find(const Subset subsets, int i){
-    if((subsets+i)->parent == -1){
-        // printf("Find\n");
-        return i;
-    }else{
-        // printf("Cul ");
-        (subsets+i)->parent = find(subsets, (subsets+i)->parent);
-    }
+    for(int i = 0; i < V - 1; i++)
+        printf("%d %d -> %d\n", result[i].src, result[i].dest, result[i].weight);
+    printf("Minimum Cost Spanning Tree : %d\n", minCost);
 }
 
 void printGraph(Graph graph) {

@@ -31,7 +31,6 @@ void addEdge(Graph, int, int, int);
 void Prim(Graph, int);
 void printGraph(Graph);
 void printSubset(Subset, int);
-int count = 0;
 
 /*
     A--28--B--16--C         A      B--16--C
@@ -119,6 +118,7 @@ Graph createAGraph(int v, int e) {
 }
 
 void addEdge(Graph graph, int s, int d, int w) {
+    static int count = 0;
     graph->edge[count].src = s;
     graph->edge[count].dest = d;
     graph->edge[count].weight = w;
@@ -141,10 +141,10 @@ void Prim(Graph graph, int v){
     subset[v].visited = TRUE;
     // printGraph(graph);
     // printSubset(subset, V);
-    int j = 0;
+    int j = 0, minCost = 0;
     while(j < V - 1){
         // printf("(j,v) = (%d %d)\n", j, v);
-        for(int i = 0 ; i < E; i++){
+        for(int i = 0 ; i < E; i++)
             if(graph->edge[i].src == v && graph->edge[i].weight < subset[graph->edge[i].dest].key && subset[graph->edge[i].dest].visited == FALSE){
                 subset[graph->edge[i].dest].parent = graph->edge[i].src;
                 subset[graph->edge[i].dest].key = graph->edge[i].weight;
@@ -152,35 +152,29 @@ void Prim(Graph graph, int v){
                 subset[graph->edge[i].src].parent = graph->edge[i].dest;
                 subset[graph->edge[i].src].key = graph->edge[i].weight;
             }
-        }
         // printSubset(subset, V);
-        int min = MAX_KEY, keep = 0;
-        for(int i = 0; i < V; i++){
-            if(subset[i].visited == 0 && subset[i].key < min){
+        int min = MAX_KEY;
+        for(int i = 0; i < V; i++)
+            if(subset[i].visited == FALSE && subset[i].key < min){
                 min = subset[i].key;
-                keep = i;
+                v = i;
             }
+        if(v < subset[v].parent){
+            result[j].src = v;
+            result[j].dest = subset[v].parent;
+        }else if(v > subset[v].parent){
+            result[j].src = subset[v].parent;
+            result[j].dest = v;
         }
-        subset[keep].visited = TRUE;
-        if(keep < subset[keep].parent){
-            result[j].src = keep;
-            result[j].dest = subset[keep].parent;
-            result[j].weight = subset[keep].key;
-        }else if(keep > subset[keep].parent){
-            result[j].src = subset[keep].parent;
-            result[j].dest = keep;
-            result[j].weight = subset[keep].key;
-        }
-        v = keep;
+        subset[v].visited = TRUE;
+        result[j].weight = subset[v].key;
+        minCost += result[j].weight;
         j++;
         // printSubset(subset, V);
     }
-    int ans = 0;
-    for(int i = 0; i < j; i++){
-        printf("%d %d %d\n", result[i].src, result[i].dest, result[i].weight);
-        ans += result[i].weight;
-    }
-    printf("Minimum Cost Spanning Tree : %d\n", ans);
+    for(int i = 0; i < V - 1; i++)
+        printf("%d %d -> %d\n", result[i].src, result[i].dest, result[i].weight);
+    printf("Minimum Cost Spanning Tree : %d\n", minCost);
 }
 
 void printGraph(Graph graph) {
