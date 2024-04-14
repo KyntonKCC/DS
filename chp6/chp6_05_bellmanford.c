@@ -33,7 +33,6 @@ void BellmanFord(Graph, int);
 void path(Subset, int);
 void printGraph(Graph);
 void printSubset(Subset, int);
-int count = 0;
 
 int main(void) {
     Graph graph = createAGraph(6, 10);
@@ -87,10 +86,19 @@ Graph createAGraph(int v, int e) {
 }
 
 void addEdge(Graph graph, int s, int d, int w) {
+    static int count = 0;
     graph->edge[count].src = s;
     graph->edge[count].dest = d;
     graph->edge[count].weight = w;
     count++;
+}
+
+int cmp1(const void * a, const void * b){
+    return ((Edge)a)->dest - ((Edge)b)->dest;
+}
+
+int cmp2(const void * a, const void * b){
+    return ((Edge)a)->src - ((Edge)b)->src;
 }
 
 void BellmanFord(Graph graph, int v){
@@ -119,11 +127,15 @@ void BellmanFord(Graph graph, int v){
             // printSubset(subset, V);
         }
     }
-    printSubset(subset, V);
+    // printSubset(subset, V);
     for(int i = 0; i < V; i++){
         printf("Vertex %d(%d) : ", i, subset[i].rank);
-        path(subset, i);
-        printf("%d \n", i);
+        if(subset[i].rank == INFINITE){
+            printf("No Path\n");
+        }else{
+            path(subset, i);
+            printf("%d \n", i);
+        }
     }
 }
 
@@ -131,14 +143,6 @@ void path(Subset s, int v){
     if((s+v)->parent == -1) return;
     path(s, (s+v)->parent);
     printf("%d ", (s+v)->parent);
-}
-
-int cmp1(const void * a, const void * b){
-    return ((Edge)a)->dest - ((Edge)b)->dest;
-}
-
-int cmp2(const void * a, const void * b){
-    return ((Edge)a)->src - ((Edge)b)->src;
 }
 
 void printGraph(Graph graph) {
