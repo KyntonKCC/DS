@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #define TRUE 1
 #define FALSE 0
-#define INFINITE 9999
+#define INFINITE 99
 #define MALLOC(p, s) \
     if (!((p) = malloc(s))){ \
         fprintf(stderr, "Insufficient memory"); \
@@ -33,12 +33,6 @@ void FloydWarshall(Graph);
 void printArray(Graph);
 
 int main(void){
-    // Graph graph = createGraph(3, 5);
-    // addEdge(graph, 0, 1, 4);
-    // addEdge(graph, 0, 2, 11);
-    // addEdge(graph, 1, 0, 6);
-    // addEdge(graph, 1, 2, 2);
-    // addEdge(graph, 2, 0, 3);
     Graph graph = createGraph(4, 7);
     addEdge(graph, 0, 1, 2);
     addEdge(graph, 0, 2, 6);
@@ -47,6 +41,12 @@ int main(void){
     addEdge(graph, 1, 3, 3);
     addEdge(graph, 2, 0, 4);
     addEdge(graph, 2, 3, 1);
+    // Graph graph = createGraph(3, 5);
+    // addEdge(graph, 0, 1, 4);
+    // addEdge(graph, 0, 2, 11);
+    // addEdge(graph, 1, 0, 6);
+    // addEdge(graph, 1, 2, 2);
+    // addEdge(graph, 2, 0, 3);
     // Graph graph = createGraph(8, 11);
     // addEdge(graph, 4, 5, 250);
     // addEdge(graph, 1, 0, 300);

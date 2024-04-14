@@ -129,7 +129,7 @@ void BellmanFord(Graph graph, int v){
     }
     // printSubset(subset, V);
     for(int i = 0; i < V; i++){
-        printf("Vertex %d(%d) : ", i, subset[i].rank);
+        printf("Vertex %d(%2d) : ", i, subset[i].rank);
         if(subset[i].rank == INFINITE){
             printf("No Path\n");
         }else{

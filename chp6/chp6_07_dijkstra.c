@@ -112,30 +112,31 @@ void Dijkstra(Graph graph, int v){
     // printSubset(subset, V);
     int j = 0;
     while(j < V){
-        for(int i = 0; i < E; i++){
+        for(int i = 0; i < E; i++)
             if(graph->edge[i].src == v && graph->edge[i].weight + subset[graph->edge[i].src].rank < subset[graph->edge[i].dest].rank){
                 subset[graph->edge[i].dest].parent = graph->edge[i].src;
                 subset[graph->edge[i].dest].rank = graph->edge[i].weight + subset[graph->edge[i].src].rank;
             }
-        }
         // printSubset(subset, V);
-        int min = INFINITE, keep = 0;
-        for(int i = 0; i < V; i++){
+        int min = INFINITE;
+        for(int i = 0; i < V; i++)
             if(subset[i].visited == 0 && subset[i].rank < min){
                 min = subset[i].rank;
-                keep = i;
+                v = i;
             }
-        }
-        subset[keep].visited = TRUE;
-        v = keep;
+        subset[v].visited = TRUE;
         j++;
         // printSubset(subset, V);
     }
-    printSubset(subset, V);
+    // printSubset(subset, V);
     for(int i = 0; i < V; i++){
-        printf("Vertex %d(%d) : ", i, subset[i].rank);
-        path(subset, i);
-        printf("%d \n", i);
+        printf("Vertex %d(%2d) : ", i, subset[i].rank);
+        if(subset[i].rank == INFINITE){
+            printf("No Path\n");
+        }else{
+            path(subset, i);
+            printf("%d \n", i);
+        }
     }
 }
 

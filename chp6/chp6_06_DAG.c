@@ -97,10 +97,10 @@ Graph createAGraph(int v, int e) {
     MALLOC(graph, sizeof(* graph));
     graph->numVertices = v;
     graph->numEdges = e;
-    MALLOC(graph->edge, e * sizeof(* graph->edge));
     MALLOC(graph->visited, v * sizeof(* graph->visited));
     MALLOC(graph->adjListCount, v * sizeof(* graph->adjListCount));
     MALLOC(graph->adjLists, v * sizeof(* graph->adjLists));
+    MALLOC(graph->edge, e * sizeof(* graph->edge));
     for(int i = 0; i < v; i++){
         graph->visited[i] = FALSE;
         graph->adjListCount[i] = 0;
@@ -132,14 +132,13 @@ void addEdge(Graph graph, int s, int d, int w) {
 void createQueue(Graph graph){
     do{
         int keep = 0;
-        for(int i = 0; i < graph->numVertices; i++){
+        for(int i = 0; i < graph->numVertices; i++)
             if(graph->visited[i] == FALSE && graph->adjListCount[i] == 0){
                 graph->visited[i] = TRUE;
                 addq(i);
                 keep = i;
                 break;
             }
-        }
         Node temp = graph->adjLists[keep];
         while(temp){
             graph->adjListCount[temp->vertex] -= 1;
@@ -159,21 +158,22 @@ void DAG(Graph graph, int v){
         subset[i].rank = INFINITE;
     }
     subset[v].rank = 0;
+    createQueue(graph);
     // printGraph(graph);
     // printSubset(subset, V);
-    createQueue(graph);
+    // printQueue(graph);
     while(front != rear){
-        int j = deleteq();
-        for(int i = 0; i < E; i++){
-            if(graph->edge[i].src == j && graph->edge[i].weight + subset[graph->edge[i].src].rank < subset[graph->edge[i].dest].rank){
-                subset[graph->edge[i].dest].parent = graph->edge[i].src;
-                subset[graph->edge[i].dest].rank = graph->edge[i].weight + subset[graph->edge[i].src].rank;
+        int i = deleteq();
+        for(int j = 0; j < E; j++)
+            if(graph->edge[j].weight + subset[graph->edge[j].src].rank < subset[graph->edge[j].dest].rank){
+                subset[graph->edge[j].dest].parent = graph->edge[j].src;
+                subset[graph->edge[j].dest].rank = graph->edge[j].weight + subset[graph->edge[j].src].rank;
             }
-        }
         // printSubset(subset, V);
     }
+    // printSubset(subset, V);
     for(int i = 0; i < V; i++){
-        printf("Vertex %d(%d) : ", i, subset[i].rank);
+        printf("Vertex %d(%2d) : ", i, subset[i].rank);
         if(subset[i].rank == INFINITE){
             printf("No Path\n");
         }else{
