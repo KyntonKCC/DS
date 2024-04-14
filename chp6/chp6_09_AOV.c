@@ -30,7 +30,7 @@ typedef struct graph_s {
 Graph createGraph(int, int);
 Node createNode(int);
 void addEdge(Graph, int, int);
-void createQueue(Graph);
+void AOV(Graph);
 void printGraph(Graph);
 int queue[MAX_SIZE];
 void addq(int);
@@ -66,9 +66,7 @@ int main(){
     // addEdge(graph, 7, 8);
     // addEdge(graph, 9, 10);
     // addEdge(graph, 12, 13);
-    printGraph(graph);
-    createQueue(graph);
-    printQueue(graph);
+    AOV(graph);
     return 0;
 }
 
@@ -107,7 +105,8 @@ void addEdge(Graph graph, int s, int d){
     graph->adjListsCount[d] += 1;
 }
 
-void createQueue(Graph graph){
+void AOV(Graph graph){
+    printGraph(graph);
     // printQueue(graph);
     do{
         int keep = 0;
@@ -125,6 +124,7 @@ void createQueue(Graph graph){
         }
         // printQueue(graph);
     }while(rear != graph->numVertices - 1);
+    printQueue(graph);
 }
 
 void printGraph(Graph graph){
