@@ -10,32 +10,30 @@ Element array[MAX_SIZE] = {
     [2] = {.key = 22},
     [3] = {.key = 77},
     [4] = {.key = 66},
-    [5] = {.key = 11},
     [6] = {.key = 55},
+    [5] = {.key = 11},
 };
-void selectionSort(Element *);
+void bubbleSort(Element *);
 void printArray(Element *);
 
 int main(){
     printArray(array);
     printf("----------------------\n");
-    selectionSort(array);
+    bubbleSort(array);
     printArray(array);
     return 0;
 }
 
-void selectionSort(Element * array){
-    for(int i = 0; i < MAX_SIZE; i++){
-        int min = i;
-        for(int j = i; j < MAX_SIZE; j++){
-            if(array[j].key < array[min].key){
-                min = j;
+void bubbleSort(Element * array){
+    for(int i = 0; i < MAX_SIZE - 1; i++){
+        for(int j = 0; j < MAX_SIZE - 1 - i; j++){
+            if(array[j].key > array[j + 1].key){
+                Element temp = array[j];
+                array[j] = array[j + 1];
+                array[j + 1] = temp;
             }
+            printArray(array);
         }
-        Element temp = array[i];
-        array[i] = array[min];
-        array[min] = temp;
-        printArray(array);
         printf("----------------------\n");
     }
 }

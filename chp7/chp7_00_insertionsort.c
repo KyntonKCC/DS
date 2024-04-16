@@ -18,7 +18,7 @@ void printArray(Element *);
 
 int main(){
     printArray(array);
-    printf("-------------------\n");
+    printf("----------------------\n");
     insertionSort(array);
     printArray(array);
     return 0;
@@ -36,7 +36,7 @@ void insertionSort(Element * array){
         }
         array[j + 1] = temp;
         printArray(array);
-        printf("-------------------\n");
+        printf("----------------------\n");
     }
 }
 
