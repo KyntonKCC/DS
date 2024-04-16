@@ -1,16 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define MAX_SIZE 6
+#define MAX_SIZE 7
 typedef struct {
     int key;
 } Element;
 Element array[MAX_SIZE] = {
-    [0] = {.key = 88},
+    [0] = {.key = 77},
     [1] = {.key = 22},
-    [2] = {.key = 55},
-    [3] = {.key = 44},
-    [4] = {.key = 77},
-    [5] = {.key = 66},
+    [2] = {.key = 44},
+    [3] = {.key = 33},
+    [4] = {.key = 66},
+    [5] = {.key = 55},
+    [6] = {.key = 11},
 };
 void insertionSort(Element *);
 void printArray(Element *);
