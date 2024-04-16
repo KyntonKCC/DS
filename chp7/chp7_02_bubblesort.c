@@ -10,8 +10,8 @@ Element array[MAX_SIZE] = {
     [2] = {.key = 22},
     [3] = {.key = 77},
     [4] = {.key = 66},
-    [6] = {.key = 55},
-    [5] = {.key = 11},
+    [5] = {.key = 55},
+    [6] = {.key = 11},
 };
 void bubbleSort(Element *);
 void printArray(Element *);

@@ -5,11 +5,11 @@ typedef struct {
     int key;
 } Element;
 Element array[MAX_SIZE] = {
-    [0] = {.key = 44},
-    [1] = {.key = 33},
-    [2] = {.key = 22},
-    [3] = {.key = 77},
-    [4] = {.key = 66},
+    [0] = {.key = 22},
+    [1] = {.key = 77},
+    [2] = {.key = 66},
+    [3] = {.key = 44},
+    [4] = {.key = 33},
     [5] = {.key = 11},
     [6] = {.key = 55},
 };
@@ -32,6 +32,7 @@ void selectionSort(Element * array){
                 min = j;
             }
         }
+        printf("%d :\n", array[min].key);
         Element temp = array[i];
         array[i] = array[min];
         array[min] = temp;
