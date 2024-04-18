@@ -17,31 +17,38 @@ Element array[MAX_SIZE] = {
     [8] = {.key = 48},
     [9] = {.key = 19},
 };
-void ImergeSort(Element *, int, int);
+void ImergeSort(Element *);
 void Imerge(Element *, int, int, int);
 void printArray(Element *);
 
 int main(){
     printArray(array);
     printf("-------------------------------\n");
-    ImergeSort(array, 0, MAX_SIZE - 1);
+    ImergeSort(array);
     printArray(array);
     return 0;
 }
 
-void ImergeSort(Element * array, int left, int right){
-    int currSize = 1;
-    while(currSize < MAX_SIZE){
-        left = 0;
-        while(left < MAX_SIZE - 1){
+void ImergeSort(Element * array){
+    // int currSize = 1;
+    // while(currSize < MAX_SIZE){
+    //     int left = 0;
+    //     while(left < MAX_SIZE - 1){
+    //         int mid = MIN(left + currSize - 1, MAX_SIZE - 1);
+    //         // printf("%d %d\n", left + currSize - 1, MAX_SIZE - 1);
+    //         int right = MIN(left + 2 * currSize - 1, MAX_SIZE - 1);
+    //         // printf("%d %d\n", left + 2 * currSize - 1, MAX_SIZE - 1);
+    //         Imerge(array, left, mid, right);
+    //         left = left + 2 * currSize;
+    //     }
+    //     currSize = 2 * currSize;
+    // }
+    for(int currSize = 1; currSize < MAX_SIZE; currSize *= 2){
+        for(int left = 0; left < MAX_SIZE - 1; left += (2 * currSize)){
             int mid = MIN(left + currSize - 1, MAX_SIZE - 1);
-            // printf("%d %d\n", left + currSize - 1, MAX_SIZE - 1);
-            right = MIN(left + 2 * currSize - 1, MAX_SIZE - 1);
-            // printf("%d %d\n", left + 2 * currSize - 1, MAX_SIZE - 1);
+            int right = MIN(left + 2 * currSize - 1, MAX_SIZE - 1);
             Imerge(array, left, mid, right);
-            left = left + 2 * currSize;
         }
-        currSize = 2 * currSize;
     }
 }
 
