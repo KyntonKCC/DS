@@ -20,7 +20,6 @@ typedef struct node_s {
 } node_t;
 treePointer createTreePointer(int);
 treePointer insert(treePointer, int);
-//recursive
 void inorder1(treePointer);     //LVR
 void preorder1(treePointer);    //VLR
 void postorder1(treePointer);   //LRV
@@ -61,13 +60,13 @@ void printStack();
 
 
 int main(){
+    treePointer root = NULL;
     MALLOC(queue, capacityQ * sizeof(int));
     MALLOC(stack, capacityS * sizeof(int));
     // char input[MAX_SIZE] = "[2,7,50,11,null,80,null,13]";
     // char input[MAX_SIZE] = "[5,9,8,12,null,10,null,20,18,15]";
     char input[MAX_SIZE] = "[6,8,7,20,null,null,11,null,5,null,13,12,14,9]";
     int num_count = 0;
-    treePointer root = NULL;
     char * token = strtok(input, "[,]");
     while(token != NULL){
         num_count++;
@@ -81,11 +80,10 @@ int main(){
                 num_count++;
             }
         }
+        printf("%s -> %d\n", token, num_count);
         if(strcmp(token, "null") == 0){
             addq(num_count);
-        }
-        printf("%s -> %d\n", token, num_count);
-        if(strcmp(token, "null") != 0){
+        }else if(strcmp(token, "null") != 0){
             if(root == NULL){
                 root = createTreePointer(atoi(token));
             }else{
@@ -134,7 +132,6 @@ treePointer insert(treePointer ptr, int num){
         ptr->rightChild = insert(ptr->rightChild, num);
     }
     return ptr;
-    
 }
 
 void inorder1(treePointer ptr) {
@@ -226,9 +223,9 @@ void addq(int item){
 
 int deleteq(){
     int item;
-    if(front == rear)
+    if(front == rear){
         return queueEmpty();
-    else{
+    }else{
         front = (front + 1) % capacityQ;
         queue[front] = 0;
         return queue[front];

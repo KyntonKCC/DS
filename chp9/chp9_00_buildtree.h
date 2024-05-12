@@ -14,11 +14,11 @@ typedef struct node_s {
     treePointer leftChild;
     int value;
     treePointer rightChild;
+    int shortest;
 } node_t;
 treePointer buildTree(char *);
 treePointer createTreePointer(int);
 treePointer insert(treePointer, int);
-//recursive
 void inorder1(treePointer);     //LVR
 void preorder1(treePointer);    //VLR
 void postorder1(treePointer);   //LRV
@@ -42,10 +42,10 @@ int stackEmpty();
 void printStack();
 
 treePointer buildTree(char * input){
+    treePointer root = NULL;
     MALLOC(queue, capacityQ * sizeof(int));
     MALLOC(stack, capacityS * sizeof(int));
     int num_count = 0;
-    treePointer root = NULL;
     char * token = strtok(input, "[,]");
     while(token != NULL){
         num_count++;
@@ -61,8 +61,7 @@ treePointer buildTree(char * input){
         }
         if(strcmp(token, "null") == 0){
             addq(num_count);
-        }
-        if(strcmp(token, "null") != 0){
+        }else if(strcmp(token, "null") != 0){
             if(root == NULL){
                 root = createTreePointer(atoi(token));
             }else{
@@ -85,6 +84,7 @@ treePointer createTreePointer(int num){
     newTreePointer->leftChild = NULL;
     newTreePointer->value = num;
     newTreePointer->rightChild = NULL;
+    newTreePointer->shortest = 0;
     return newTreePointer;
 }
 
@@ -132,9 +132,9 @@ void addq(int item){
 
 int deleteq(){
     int item;
-    if(front == rear)
+    if(front == rear){
         return queueEmpty();
-    else{
+    }else{
         front = (front + 1) % capacityQ;
         queue[front] = 0;
         return queue[front];
@@ -161,7 +161,7 @@ void queueFull(){
 
 int queueEmpty(){
     fprintf(stderr, "Queue is empty, cannot delete element\n");
-    // exit(EXIT_FAILURE);
+    exit(EXIT_FAILURE);
 }
 
 void copy(const int * first, const int * end, int * newQueue){
@@ -196,7 +196,7 @@ void stackFull(){
 
 int stackEmpty(){
     fprintf(stderr, "Stack is empty, cannot pop element\n");
-    // exit(EXIT_FAILURE);
+    exit(EXIT_FAILURE);
 }
 
 void printStack(){
