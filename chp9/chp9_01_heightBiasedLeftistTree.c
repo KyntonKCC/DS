@@ -32,17 +32,14 @@ int main(){
 }
 
 void HBLT(treePointer ptr){
-    if(ptr->leftChild != NULL){
+    if(ptr->leftChild != NULL)
         HBLT(ptr->leftChild);
-    }
-    if(ptr->rightChild != NULL){
+    if(ptr->rightChild != NULL)
         HBLT(ptr->rightChild);
-    }
-    if(ptr->leftChild == NULL || ptr->rightChild == NULL){
+    if(ptr->leftChild == NULL || ptr->rightChild == NULL)
         ptr->shortest = 1;
-    }else{
+    else
         ptr->shortest = MIN(ptr->leftChild->shortest, ptr->rightChild->shortest) + 1;
-    }
 }
 
 void inorder2(treePointer ptr) {
