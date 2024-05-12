@@ -25,21 +25,21 @@ void inorder1(treePointer);     //LVR
 void preorder1(treePointer);    //VLR
 void postorder1(treePointer);   //LRV
 
-
-// int queue[MAX_SIZE];
-// void addq(int);
-// int deleteq();
-// void queueFull();
-// int queueEmpty();
-// void printQueue();
-// int front = -1, rear = -1;
-// int stack[MAX_SIZE];
-// void push(int);
-// int pop();
-// void stackFull();
-// int stackEmpty();
-// int top = -1;
-
+/*
+int queue[MAX_SIZE];
+void addq(int);
+int deleteq();
+void queueFull();
+int queueEmpty();
+void printQueue();
+int front = -1, rear = -1;
+int stack[MAX_SIZE];
+void push(int);
+int pop();
+void stackFull();
+int stackEmpty();
+int top = -1;
+*/
 
 int * queue;
 int capacityQ = 2;
@@ -63,8 +63,6 @@ void printStack();
 int main(){
     MALLOC(queue, capacityQ * sizeof(int));
     MALLOC(stack, capacityS * sizeof(int));
-
-
     // char input[MAX_SIZE] = "[2,7,50,11,null,80,null,13]";
     // char input[MAX_SIZE] = "[5,9,8,12,null,10,null,20,18,15]";
     char input[MAX_SIZE] = "[6,8,7,20,null,null,11,null,5,null,13,12,14,9]";
@@ -102,10 +100,9 @@ int main(){
         printf("\n");
         token = strtok(NULL, "[,]");
     }
-    printf("\n");
-    printf("root  : %d\nqueue : ", root->value);
+    printf("\nqueue : ");
     printQueue();
-    printf("------------Recursive Traversals------------");
+    printf("\n------------Recursive Traversals------------");
     printf("\nPreorder:\t");
     preorder1(root);
     printf("\nInorder:\t");
@@ -143,14 +140,14 @@ treePointer insert(treePointer ptr, int num){
 void inorder1(treePointer ptr) {
     if (ptr) {
         inorder1(ptr->leftChild);
-        printf("%d ", ptr->value);
+        printf("%2d ", ptr->value);
         inorder1(ptr->rightChild);
     }
 }
 
 void preorder1(treePointer ptr) {
     if (ptr) {
-        printf("%d ", ptr->value);
+        printf("%2d ", ptr->value);
         preorder1(ptr->leftChild);
         preorder1(ptr->rightChild);
     }
@@ -160,65 +157,65 @@ void postorder1(treePointer ptr) {
     if (ptr) {
         postorder1(ptr->leftChild);
         postorder1(ptr->rightChild);
-        printf("%d ", ptr->value);
+        printf("%2d ", ptr->value);
     }
 }
 
+/*
+void addq(int item){
+    if(rear == MAX_SIZE - 1)
+        queueFull();
+    else
+        queue[++rear] = item;
+}
 
-// void printQueue(){
-//     for(int i = 0; i <= rear; i++)
-//         printf("%d ", queue[i]);
-//     printf("\n");
-// }
+int deleteq(){
+    if(front == rear)
+        return queueEmpty();
+    else
+        return queue[++front];
+}
 
-// void addq(int item){
-//     if(rear == MAX_SIZE - 1)
-//         queueFull();
-//     else
-//         queue[++rear] = item;
-// }
+void queueFull(){
+    fprintf(stderr, "Queue is full, cannot add element\n");
+    // exit(EXIT_FAILURE);
+}
 
-// int deleteq(){
-//     if(front == rear)
-//         return queueEmpty();
-//     else
-//         return queue[++front];
-// }
+int queueEmpty(){
+    fprintf(stderr, "Queue is empty, cannot delete element\n");
+    // exit(EXIT_FAILURE);
+}
 
-// void queueFull(){
-//     fprintf(stderr, "Queue is full, cannot add element\n");
-//     // exit(EXIT_FAILURE);
-// }
+void printQueue(){
+    for(int i = 0; i <= rear; i++)
+        printf("%d ", queue[i]);
+    printf("\n");
+}
 
-// int queueEmpty(){
-//     fprintf(stderr, "Queue is empty, cannot delete element\n");
-//     // exit(EXIT_FAILURE);
-// }
+void push(int item){
+    if(top >= MAX_SIZE - 1)
+        stackFull();
+    else
+        stack[++top] = item;
+}
 
-// void push(int item){
-//     if(top >= MAX_SIZE - 1)
-//         stackFull();
-//     else
-//         stack[++top] = item;
-// }
+int pop(){
+    if(top == -1)
+        return stackEmpty();
+    else
+        return stack[top--];
+}
 
-// int pop(){
-//     if(top == -1)
-//         return stackEmpty();
-//     else
-//         return stack[top--];
-// }
+void stackFull(){
+    fprintf(stderr, "Stack is full, cannot add element\n");
+    // exit(EXIT_FAILURE);
+}
 
-// void stackFull(){
-//     fprintf(stderr, "Stack is full, cannot add element\n");
-//     // exit(EXIT_FAILURE);
-// }
-
-// int stackEmpty(){
-//     fprintf(stderr, "Stack is empty, cannot pop element\n");
-//     // exit(EXIT_FAILURE);
-// }
-
+int stackEmpty(){
+    fprintf(stderr, "Stack is empty, cannot pop element\n");
+    // exit(EXIT_FAILURE);
+}
+*/
 
 void addq(int item){
     rear = (rear + 1) % capacityQ;
@@ -239,7 +236,7 @@ int deleteq(){
 }
 
 void queueFull(){
-    // printf("Queue is full, cannot add element, update capacity = %d -> %d\n", capacityQ, capacityQ * 2);
+    printf("Queue is full, cannot add element, update capacity = %d -> %d\n", capacityQ, capacityQ * 2);
     int * newQueue;
     MALLOC(newQueue, 2 * capacityQ * sizeof(int));
     
@@ -294,7 +291,7 @@ int pop(){
 }
 
 void stackFull(){
-    // printf("Stack is full, cannot add element, update capacity = %d -> %d\n", capacityS, capacityS * 2);
+    printf("Stack is full, cannot add element, update capacity = %d -> %d\n", capacityS, capacityS * 2);
     REALLOC(stack, 2 * capacityS * sizeof(int));
     capacityS *= 2;
 }
