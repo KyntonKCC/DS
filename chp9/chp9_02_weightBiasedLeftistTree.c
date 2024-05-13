@@ -71,9 +71,7 @@ void WBLT(treePointer ptr){
         WBLT(ptr->leftChild);
     if(ptr->rightChild != NULL)
         WBLT(ptr->rightChild);
-    if((ptr->leftChild == NULL && ptr->rightChild == NULL)){
-        return;
-    }else if((ptr->leftChild == NULL && ptr->rightChild != NULL) || 
+    if((ptr->leftChild == NULL && ptr->rightChild != NULL) || 
             (ptr->leftChild != NULL && ptr->rightChild != NULL && ptr->leftChild->shortest < ptr->rightChild->shortest)){
         treePointer tempPtr;
         tempPtr = ptr->leftChild;
