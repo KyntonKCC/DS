@@ -58,6 +58,25 @@ void stackFull();
 int stackEmpty();
 void printStack();
 
+/*
+          2                  __5__
+         / \                /     \
+        7   50             9       8
+       /    /             /       /
+      11  80             12      10
+     /                  /  \    /
+    13                 20  18  15
+
+         1                  _3_
+        / \                /   \
+      10   8              4     7
+      /   /              / \   / 
+    12   11             6  20 10  
+        /              / \   /
+       16             25 21 15
+                     /
+                    27
+*/
 
 int main(){
     treePointer root = NULL;
@@ -65,7 +84,8 @@ int main(){
     MALLOC(stack, capacityS * sizeof(int));
     // char input[MAX_SIZE] = "[2,7,50,11,null,80,null,13]";
     // char input[MAX_SIZE] = "[5,9,8,12,null,10,null,20,18,15]";
-    char input[MAX_SIZE] = "[6,8,7,20,null,null,11,null,5,null,13,12,14,9]";
+    // char input[MAX_SIZE] = "[1,10,8,12,null,11,null,null,null,16]";
+    char input[MAX_SIZE] = "[3,4,7,6,20,10,null,25,21,null,null,15,null,27]";
     int num_count = 0;
     char * token = strtok(input, "[,]");
     while(token != NULL){

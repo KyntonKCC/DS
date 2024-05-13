@@ -1,4 +1,5 @@
 #define MAX_SIZE 150
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
 #define MALLOC(p, s)\
     if(!((p) = malloc(s))){\
         fprintf(stderr, "Insufficient memory");\
@@ -19,9 +20,14 @@ typedef struct node_s {
 treePointer buildTree(char *);
 treePointer createTreePointer(int);
 treePointer insert(treePointer, int);
+void reset();
 void inorder1(treePointer);     //LVR
 void preorder1(treePointer);    //VLR
 void postorder1(treePointer);   //LRV
+void inorderShortest(treePointer);     //LVR
+void preorderShortest(treePointer);    //VLR
+void postorderShortest(treePointer);   //LRV
+void printTree(treePointer);
 
 int * queue;
 int capacityQ = 2;
@@ -99,6 +105,16 @@ treePointer insert(treePointer ptr, int num){
     return ptr;
 }
 
+void reset(){
+    free(queue);
+    free(stack);
+    capacityQ = 2;
+    front = 1;
+    rear = -1;
+    capacityS = 1;
+    top = -1;
+}
+
 void inorder1(treePointer ptr) {
     if (ptr) {
         inorder1(ptr->leftChild);
@@ -121,6 +137,47 @@ void postorder1(treePointer ptr) {
         postorder1(ptr->rightChild);
         printf("%2d ", ptr->value);
     }
+}
+
+void inorderShortest(treePointer ptr) {
+    if (ptr) {
+        inorderShortest(ptr->leftChild);
+        printf("%2d ", ptr->shortest);
+        inorderShortest(ptr->rightChild);
+    }
+}
+
+void preorderShortest(treePointer ptr) {
+    if (ptr) {
+        printf("%2d ", ptr->shortest);
+        preorderShortest(ptr->leftChild);
+        preorderShortest(ptr->rightChild);
+    }
+}
+
+void postorderShortest(treePointer ptr) {
+    if (ptr) {
+        postorderShortest(ptr->leftChild);
+        postorderShortest(ptr->rightChild);
+        printf("%2d ", ptr->shortest);
+    }
+}
+
+void printTree(treePointer ptr){
+    printf("------------Recursive Traversals------------");
+    printf("\nPreorder:\t");
+    preorder1(ptr);
+    printf("\nShortest:\t");
+    preorderShortest(ptr);
+    printf("\nInorder:\t");
+    inorder1(ptr);
+    printf("\nShortest:\t");
+    inorderShortest(ptr);
+    printf("\nPostorder:\t");
+    postorder1(ptr);
+    printf("\nShortest:\t");
+    postorderShortest(ptr);
+    printf("\n");
 }
 
 void addq(int item){
