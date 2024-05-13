@@ -28,7 +28,22 @@ void WBLT(treePointer);
                      /                            / \   /   /            / \   /   /         
                     27                           25 21 15  11           25 21 15  11        
                                                 /         /            /         /            
-                                               27        16           27        16          
+                                               27        16           27        16     
+
+
+        3               5                           __3__                           __3__
+       / \             / \                         /     \                         /     \
+      17  7           8   6                       17      5                       5      17        
+       \   \           \   \            ->         \     / \        ->           / \     /                 
+        22  15          11  9                       22  8   6                   8   6   22                  
+           /               / \                           \   \                 /   /                   
+          36              25 23                           11  7               11  7                        
+                                                               \                 /                      
+                                                                9               9                        
+                                                               / \             / \                         
+                                                              25 15           15 25                            
+                                                                /  \         /  \                               
+                                                               36  23       36  23                            
 */
 
 int main(){
@@ -36,6 +51,8 @@ int main(){
     char input2[MAX_SIZE] = "[5,9,8,12,null,10,null,20,18,15]";
     // char input1[MAX_SIZE] = "[1,10,8,12,null,11,null,null,null,16]";
     // char input2[MAX_SIZE] = "[3,4,7,6,20,10,null,25,21,null,null,15,null,27]";
+    // char input1[MAX_SIZE] = "[3,17,7,null,22,null,15,null,null,36]";
+    // char input2[MAX_SIZE] = "[5,8,6,null,11,null,9,null,null,25,23]";
     treePointer root1 = buildTree(input1);
     reset();
     treePointer root2 = buildTree(input2);
