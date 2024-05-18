@@ -11,6 +11,7 @@
         "type_traits": "c",
         "utility": "c",
         "random": "c",
-        "chp9_00_buildtree.h": "c"
+        "chp9_00_buildtree.h": "c",
+        "chp10_01_opitmalbst.h": "c"
     }
 }
