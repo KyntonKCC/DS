@@ -3,9 +3,8 @@
 #include "chp10_02_redblacktree.h"
 treePointer createTreePointer(treePointer, treePointer, int);
 treePointer insert(treePointer, int);
-treePointer insertA(treePointer, treePointer, int);
+treePointer insertRB(treePointer, treePointer, int);
 treePointer calRB(treePointer);
-treePointer calRBT(treePointer, treePointer);
 treePointer RBT_CC_R(treePointer);
 treePointer RBT_CC_B(treePointer);
 treePointer RBT_LL_B(treePointer);
@@ -121,28 +120,24 @@ treePointer createTreePointer(treePointer ptrP, treePointer ptr, int num) {
 
 treePointer insert(treePointer ptr, int num){
     // printf("insert : %d\n", num);
-    return insertA(ptr, ptr, num);
+    return insertRB(ptr, ptr, num);
 }
 
-treePointer insertA(treePointer ptrP, treePointer ptr, int num){
+treePointer insertRB(treePointer ptrP, treePointer ptr, int num){
     if(ptr == NULL)
         return createTreePointer(ptrP, ptr, num);
     else if(num < ptr->key)
-        ptr->leftChild = insertA(ptr, ptr->leftChild, num);
+        ptr->leftChild = insertRB(ptr, ptr->leftChild, num);
     else if(ptr->key < num)
-        ptr->rightChild = insertA(ptr, ptr->rightChild, num);
+        ptr->rightChild = insertRB(ptr, ptr->rightChild, num);
     return ptr;
 }
 
 treePointer calRB(treePointer ptr){
-    return calRBT(ptr, ptr);
-}
-
-treePointer calRBT(treePointer ptrR, treePointer ptr){
     if(ptr->leftChild != NULL)
-        ptr->leftChild = calRBT(ptrR, ptr->leftChild);
+        ptr->leftChild = calRB(ptr->leftChild);
     if(ptr->rightChild != NULL)
-        ptr->rightChild = calRBT(ptrR, ptr->rightChild);
+        ptr->rightChild = calRB(ptr->rightChild);
 
     if(ptr->leftChild != NULL && ptr->leftChild->color == 'R' 
         && ptr->leftChild->leftChild != NULL && ptr->leftChild->leftChild->color == 'R'){
