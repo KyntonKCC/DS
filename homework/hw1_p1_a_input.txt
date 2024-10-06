@@ -1,0 +1,5 @@
++A*BC
+**A+BCD
+-*+ABC/D+E*FG
+-+/*DEFAC
+++AB/*CDE
