@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #define MAX_STACK_SIZE 100
 typedef enum{
-    lparen, rparen, plus, minus, times, divide, mod, eos, operand
+    plus, minus, times, divide, eos, operand
 }precedence;
 char expression[MAX_STACK_SIZE];
 char remember[MAX_STACK_SIZE];
@@ -50,28 +50,17 @@ void Prefix_to_Infix(){
         if(token == operand){
             push(symbol);
             size[++sizetop] = 1;
-            // printf("%c %d, remtop = %d, sizetop = %d\n", remember[remtop], size[sizetop], remtop, sizetop);
         }else{
-            char op1[MAX_STACK_SIZE], op2[MAX_STACK_SIZE];
-            // printf("size = %d op2 : ", size[sizetop]);
-            for(int i = 0; i < size[sizetop]; i++){
+            char op1[size[sizetop - 1]], op2[size[sizetop]];
+            for(int i = 0; i < size[sizetop]; i++)
                 op2[i] = pop();
-                // printf("%c ", op2[i]);
-            }
-            // printf("\n");
-            // printf("size = %d op1 : ", size[sizetop - 1]);
-            for(int i = 0; i < size[sizetop - 1]; i++){
+            for(int i = 0; i < size[sizetop - 1]; i++)
                 op1[i] = pop();
-                // printf("%c ", op1[i]);
-            }
-            // printf("\n");
-            // push(')');
             for(int i = size[sizetop - 1] - 1; i >= 0; i--)
                 push(op1[i]);
             rememberToken(token);
             for(int i = size[sizetop] - 1; i >= 0; i--)
                 push(op2[i]);
-            // push('(');
             size[sizetop - 1] = size[sizetop] + size[sizetop - 1] + 1;
             size[sizetop] = 0;
             sizetop--;
@@ -83,13 +72,10 @@ void Prefix_to_Infix(){
 precedence getToken(char *symbol, int *n){
     *symbol = expression[(*n)--];
     switch(*symbol){
-        // case '(': return lparen;
-        // case ')': return rparen;
         case '+': return plus;
         case '-': return minus;
         case '/': return divide;
         case '*': return times;
-        // case '%': return mod;
         case '\0': return eos;
         default : return operand;
     }
@@ -101,7 +87,6 @@ void rememberToken(precedence item){
         case minus: push('-'); break;
         case divide: push('/'); break;
         case times: push('*'); break;
-        // case mod: push('%'); break;
     }
 }
 
