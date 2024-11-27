@@ -48,7 +48,10 @@ TreeNode* deleteNode(TreeNode* root, int key) {
         root->right = deleteNode(root->right, key);
     }else if(key == root->val){
         TreeNode* temp;
-        if(root->left == NULL){
+        if(root->left == NULL && root->right == NULL){
+            free(root);
+            return NULL;
+        }else if(root->left == NULL){
             temp = root->right;
             free(root);
             return temp;
