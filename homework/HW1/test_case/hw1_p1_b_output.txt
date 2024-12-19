@@ -1,3 +1,0 @@
-AB*CD/-
-AB+CD*E/-
-ABC*+DE/-F+
