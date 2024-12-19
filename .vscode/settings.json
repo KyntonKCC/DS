@@ -14,6 +14,7 @@
         "chp9_00_buildtree.h": "c",
         "chp10_01_opitmalbst.h": "c",
         "chp10_02_redblacktree.h": "c",
-        "cmath": "c"
+        "cmath": "c",
+        "limits": "c"
     }
 }
